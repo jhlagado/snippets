@@ -25,8 +25,8 @@ const getPage = (substr) => (page) => {
 
 const getMovieTitles = async (substr) => {
   const getPageFn = getPage(substr);
-  const page = await getPageFn(1);
-  const promises = Array.from({ length: page.total_pages }, getPageFn);
+  const { total_pages } = await getPageFn(1);
+  const promises = Array.from({ length: total_pages }, getPageFn);
   const pages = await Promise.all(promises);
   const movies = pages.map((page) => page.data).flat();
   const titles = movies.map((movie) => movie.Title);
